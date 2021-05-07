@@ -1,0 +1,27 @@
+#
+#       AUTHOR - Raman Sailopal
+#
+#       docker compose yml file for Yottadb with M-Gateway service and nodejs client with libraries to connect to yottadb
+#
+version: "2"
+services:
+ yottadb:
+   image: docker.io/ramb0/yottadb-gateway
+   ports:
+      - 7041:7041
+   networks:
+      - new
+   mem_limit: 1G
+ python-client:
+   image: docker.io/ramb0/yottadb-python-client
+   volumes:
+      - $repodata:/tmp/mgdbx
+
+   environment:
+     - yottadbhost=yottadb
+     - yottadbport=7041
+   networks:
+      - new
+
+networks:
+    new:
